@@ -15,7 +15,6 @@ def part_1(advent_of_code):
                         first = char
                     last = char
             line_val = int(first + last)
-            print(line_val)
             sum += line_val
         advent_of_code.answer(1, sum)
 
@@ -37,30 +36,25 @@ def part_2(advent_of_code):
         sum = 0
         for line in input_file:
             line = line.replace('\n', '')
-            first = None
-            last = None
-            index = 0
+            first = last = None
 
             # Forwards search
+            index = 0
             while index < len(line):
                 incr = 1
-                r = None
 
                 char = line[index]
                 if char.isdigit():
-                    r = char
+                    first = char
                 else:
                     for k,v in text_to_digit.items():
                         x = line.find(k, index)
                         if x == index:
-                            r = str(v)
+                            first = str(v)
                             incr = len(k)
                             break
-
-                if r is not None:
-                    if first is None:
-                        first = r
-                        break
+                if first is not None:
+                    break
                 index += incr
 
             # Separately backwards search for the case of 'oneight', 'eightwo' or 'eighthree' at the end of the line.
@@ -68,29 +62,23 @@ def part_2(advent_of_code):
             index = 0
             while index < len(line):
                 incr = 1
-                r = None
 
                 char = line_r[index]
                 if char.isdigit():
-                    r = char
+                    last = char
                 else:
                     for k, v in text_to_digit.items():
                         x = line_r.find(k[::-1], index)
                         if x == index:
-                            r = str(v)
+                            last = str(v)
                             incr = len(k)
                             break
-
-                if r is not None:
-                    if last is None:
-                        last = r
-                        break
+                if last is not None:
+                    break
                 index += incr
+
             line_val = int(first + last)
-            print(line)
-            print(line_val)
             sum += line_val
-        print(sum)
         advent_of_code.answer(2, sum)
 
 
